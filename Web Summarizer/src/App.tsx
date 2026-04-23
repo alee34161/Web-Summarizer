@@ -50,12 +50,14 @@ function App() {
   }
 
 
-  
+
   return (
     <>
     <div className="Title">
       <h1>Web Page Summarizer</h1>
+    </div>
 
+    <div className="Input">
       <input type="text" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="Enter URL here" />
       <button onClick={summarize} disabled={loading}>
       {loading ? "Summarizing..." : "Summarize"}
