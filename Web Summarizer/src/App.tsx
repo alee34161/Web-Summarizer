@@ -1,15 +1,12 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
 import './App.css'
 
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
-  const [url setUrl] = useState('');
-  const [result, setResult] = useState('null');
+  const [url, setUrl] = useState('');
+  const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -42,7 +39,36 @@ function App() {
     }
   }
   return (
-    
+    <>
+    <div className="Title">
+      <h1>Web Page Summarizer</h1>
+
+      <input type="text" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="Enter URL here" />
+      <button onClick={summarize} disabled={loading}>
+      {loading ? "Summarizing..." : "Summarize"}
+      </button>
+    </div>
+
+    {result && (
+      <div className="Result">
+        <h2>Summary</h2>
+        <ul>
+          {result.summary.map((point, i) => <li key={i}>{point}</li>)}
+        </ul>
+
+        <h2>Sources</h2>
+        {result.sources.length === 0 ? (
+          <p>No sources found.</p>
+        ) : (
+          <ul>
+            {result.sources.map((source, i) => <li key={i}>
+                {source.url ? (<a href={source.url} target="_blank" rel="noopener noreferrer">{source.label}</a>) : (<span>{source.label}</span>)}
+            </li>)}
+          </ul>
+        )}
+      </div>
+    )}
+    </>
   );
 }
 
