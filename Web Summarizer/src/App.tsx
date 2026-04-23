@@ -62,10 +62,13 @@ function App() {
       <button onClick={summarize} disabled={loading}>
       {loading ? "Summarizing..." : "Summarize"}
       </button>
-
-      {error && <p className="Error">{error}</p>}
-
     </div>
+
+    {error && (
+      <div className="Error">
+        <p>{error}</p>
+      </div>
+    )}
 
     {result && (
       <div className="Result">
