@@ -4,11 +4,21 @@ import './App.css'
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+interface Source {
+  label: string;
+  url: string | null;
+}
+
+interface SummaryResult {
+  summary: string[];
+  sources: Source[];
+}
+
 function App() {
-  const [url, setUrl] = useState('');
-  const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [url, setUrl] = useState<string>('');
+  const [result, setResult] = useState<SummaryResult | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
 
   const summarize = async () => {
@@ -33,7 +43,7 @@ function App() {
       const data = await response.json();
       setResult(data);
     } catch (err) {
-      setError(err.message);
+      setError((err as Error).message);
     } finally {
       setLoading(false);
     }
@@ -47,6 +57,9 @@ function App() {
       <button onClick={summarize} disabled={loading}>
       {loading ? "Summarizing..." : "Summarize"}
       </button>
+
+      {error && <p className="Error">{error}</p>}
+
     </div>
 
     {result && (
