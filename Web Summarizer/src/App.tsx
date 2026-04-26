@@ -1,6 +1,17 @@
 import { useState } from 'react'
 import './App.css'
 
+/* TODO LIST:
+  - History List
+    - Store in user's browser local storage; no need to implement cookies/auth
+    - Minimized button/links/title in a list
+    - Can be expanded to see full summary and sources again
+    Sorted by most recent by default
+  - Search bar for history
+    - Can search by URL or summary text
+  - Delete history items/Delete all
+*/
+
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -71,12 +82,14 @@ function App() {
     )}
 
     {result && (
-      <div className="Result">
-        <h2>Summary</h2>
-        <ul>
-          {result.summary.map((point, i) => <li key={i}>{point}</li>)}
-        </ul>
-
+      <div className="ResultsBlock">
+        <div className="Result">
+          <h2>Summary</h2>
+          <ul>
+            {result.summary.map((point, i) => <li key={i}>{point}</li>)}
+          </ul>
+        </div>
+        <div className="Source">
         <h2>Sources</h2>
         {result.sources.length === 0 ? (
           <p>No sources found.</p>
@@ -88,7 +101,13 @@ function App() {
           </ul>
         )}
       </div>
+      </div>
     )}
+
+    <div className="Footer">
+      <p>This web app uses generative AI to summarize links and is meant to quickly parse data.</p>
+      <p>Please verify accuracy of important information and sources before use.</p>
+    </div>
     </>
   );
 }

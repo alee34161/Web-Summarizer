@@ -5,35 +5,194 @@
 }
 
 body {
-  font-family: system-ui, sans-serif;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f4f8 0%, #e8edf2 50%, #dde4ec 100%);
+  color: #1a2332;
   line-height: 1.6;
-  color: #111;
-  background-color: #f5f5f5;
 }
 
 .Title {
   text-align: center;
+  padding: 3.5rem 1rem 1rem;
+}
+
+.Title h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a2332;
+  letter-spacing: -0.02em;
 }
 
 .Input {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  padding: 1.5rem 1rem;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.Input input {
+  flex: 1;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-family: inherit;
+  border: 1.5px solid #c8d0da;
+  border-right: none;
+  border-radius: 6px 0 0 6px;
+  outline: none;
+  background: #fff;
+  color: #1a2332;
+  transition: border-color 0.2s;
+}
+
+.Input input:focus {
+  border-color: #3a6bc4;
+}
+
+.Input input::placeholder {
+  color: #9aa5b4;
+}
+
+.Input button {
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  background: #2a4fa8;
+  color: #fff;
+  border: 1.5px solid #2a4fa8;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.Input button:hover {
+  background: #1e3d8a;
+  border-color: #1e3d8a;
+}
+
+.Input button:disabled {
+  background: #8fa3c8;
+  border-color: #8fa3c8;
+  cursor: not-allowed;
 }
 
 .Error {
-  color: red;
-  text-align: center;
-  margin-top: 1rem;
+  max-width: 700px;
+  margin: 0 auto 1rem;
+  padding: 12px 16px;
+  background: #fff0f0;
+  border: 1px solid #f5c0c0;
+  border-radius: 6px;
+  color: #b00020;
+  font-size: 14px;
+}
+
+.ResultsBlock {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .Result {
-  text-align: left;
-  max-width: 800px;
-  margin: 2rem auto;
+  max-width: 90%;
+  flex: 2;
+  margin: 0 auto 3rem;
+  background: #fff;
+  border: 1px solid #d0d8e4;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(30, 50, 80, 0.08);
+}
+
+.Result h2 {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #5a6a7e;
+  padding: 1.25rem 1.5rem 0.75rem;
+  border-bottom: 1px solid #eaeff5;
+  background: #f7f9fc;
+}
+
+.Source {
+  max-width: 90%;
+  flex: 1;
+  margin: 0 auto 3rem;
+  background: #fff;
+  border: 1px solid #d0d8e4;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(30, 50, 80, 0.08);
+}
+.Source h2 {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #5a6a7e;
+  padding: 1.25rem 1.5rem 0.75rem;
+  border-bottom: 1px solid #eaeff5;
+  background: #f7f9fc;
+}
+
+.Result li {
+  padding: 12px 1.5rem;
+  border-bottom: 1px solid #eaeff5;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #2c3e50;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.Source li {
+  padding: 12px 1.5rem;
+  border-bottom: 1px solid #eaeff5;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #2c3e50;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.Result li:last-child {
+  border-bottom: none;
+}
+
+.Result li::before {
+  content: '—';
+  color: #8fa3c8;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.Source a {
+  color: #2a4fa8;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.Source a:hover {
+  text-decoration: underline;
+  color: #1e3d8a;
+}
+
+.Footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
   padding: 1rem;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  font-size: 12px;
+  color: #5a6a7e;
 }
