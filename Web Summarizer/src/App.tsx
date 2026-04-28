@@ -53,6 +53,7 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [history, setHistory] = useState<HistoryItem[]>(loadHistory());
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [search, setSearch] = useState<string>('');
 
   const toggleExpand = (id: string) => {
     setExpandedId(prev => prev === id ? null : id);
@@ -109,6 +110,12 @@ function App() {
     }
   }
 
+  const filteredHistory = history.filter(item => {
+    const searchLower = search.toLowerCase();
+    if(!searchLower) return true;
+    return item.url.toLowerCase().includes(searchLower) || item.result.summary.some(point => point.toLowerCase().includes(searchLower));
+  });
+
   return (
     <>
     <div className="Title">
@@ -151,6 +158,10 @@ function App() {
       </div>
     )}
 
+    <div className="Search">
+      <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by URL or history..." />
+    </div>
+
     <div className="History">
       <h2>History</h2>
       <button onClick={clearHistory}>Clear History</button>
@@ -158,12 +169,12 @@ function App() {
         <p>No history yet.</p>
       ) : (
         <ul>
-          {history.map((item) => (
+          {filteredHistory.map((item) => (
             <li key={item.id}>
               <span>{item.url}</span>
               <span>{new Date(item.timestamp).toLocaleString()}</span>
               <ul>
-                {history.map(item => (
+                {filteredHistory.map(item => (
                   <li key={item.id}>
                     <button onClick={(e) => {
                       e.stopPropagation();
