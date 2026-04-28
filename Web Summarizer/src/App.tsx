@@ -14,6 +14,7 @@ import './App.css'
 
 
 const API_URL = import.meta.env.VITE_API_URL;
+const HISTORY_KEY = 'web_summarizer_history';
 
 interface Source {
   label: string;
@@ -25,11 +26,32 @@ interface SummaryResult {
   sources: Source[];
 }
 
+interface HistoryItem {
+  id: string;
+  url: string;
+  result: SummaryResult;
+  timestamp: number;
+}
+
+function loadHistory(): HistoryItem[] {
+  try {
+    const data = localStorage.getItem(HISTORY_KEY);
+    return data ? JSON.parse(data) : [];
+  } catch (err) {
+    return [];
+  }
+}
+
+function saveHistory(history: HistoryItem[]) {
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+}
+
 function App() {
   const [url, setUrl] = useState<string>('');
   const [result, setResult] = useState<SummaryResult | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [history, setHistory] = useState<HistoryItem[]>(loadHistory());
 
 
   const summarize = async () => {
@@ -53,14 +75,22 @@ function App() {
 
       const data = await response.json();
       setResult(data);
+
+      const newItem: HistoryItem = {
+        id: crypto.randomUUID(),
+        url,
+        result: data,
+        timestamp: Date.now(),
+      };
+      const updated = [newItem, ...history];
+      saveHistory(updated);
+      setHistory(updated);
     } catch (err) {
       setError((err as Error).message);
     } finally {
       setLoading(false);
     }
   }
-
-
 
   return (
     <>
@@ -103,6 +133,23 @@ function App() {
       </div>
       </div>
     )}
+
+    <div className="History">
+      <h2>History</h2>
+      {history.length === 0 ? (
+        <p>No history yet.</p>
+      ) : (
+        <ul>
+          {history.map((item) => (
+            <li key={item.id}>
+              <span>{item.url}</span>
+              <span>{new Date(item.timestamp).toLocaleString()}</span>
+              // add expand/collapse functionality to show summary and sources again without re-fetching
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
 
     <div className="Footer">
       <p>This web app uses generative AI to summarize links and is meant to quickly parse data.</p>
