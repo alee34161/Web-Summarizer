@@ -58,6 +58,18 @@ function App() {
     setExpandedId(prev => prev === id ? null : id);
   }
 
+  const deleteHistoryItem = (id: string) => {
+    const updated = history.filter(item => item.id !== id);
+    saveHistory(updated);
+    setHistory(updated);
+  }
+
+  const clearHistory = () => {
+    saveHistory([]);
+    setHistory([]);
+    setExpandedId(null);
+  }
+
 
   const summarize = async () => {
     if(!url) return;
@@ -141,6 +153,7 @@ function App() {
 
     <div className="History">
       <h2>History</h2>
+      <button onClick={clearHistory}>Clear History</button>
       {history.length === 0 ? (
         <p>No history yet.</p>
       ) : (
@@ -152,6 +165,10 @@ function App() {
               <ul>
                 {history.map(item => (
                   <li key={item.id}>
+                    <button onClick={(e) => {
+                      e.stopPropagation();
+                      deleteHistoryItem(item.id);
+                      }}>Delete</button>
                     <button onClick={() => toggleExpand(item.id)}>
                       {expandedId === item.id ? "Hide Details" : "Show Details"}
                     </button>
