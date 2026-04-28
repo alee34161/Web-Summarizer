@@ -52,6 +52,11 @@ function App() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [history, setHistory] = useState<HistoryItem[]>(loadHistory());
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+
+  const toggleExpand = (id: string) => {
+    setExpandedId(prev => prev === id ? null : id);
+  }
 
 
   const summarize = async () => {
@@ -144,7 +149,33 @@ function App() {
             <li key={item.id}>
               <span>{item.url}</span>
               <span>{new Date(item.timestamp).toLocaleString()}</span>
-              // add expand/collapse functionality to show summary and sources again without re-fetching
+              <ul>
+                {history.map(item => (
+                  <li key={item.id}>
+                    <button onClick={() => toggleExpand(item.id)}>
+                      {expandedId === item.id ? "Hide Details" : "Show Details"}
+                    </button>
+                    {expandedId === item.id && (
+                      <div className="ResultsBlock">
+                        <div className="Result">
+                          <h2>Summary</h2>
+                          <ul>
+                            {item.result.summary.map((point, i) => <li key={i}>{point}</li>)}
+                          </ul>
+                        </div>
+                        <div className="Source">
+                          <h2>Sources</h2>
+                          <ul>
+                            {item.result.sources.map((source, i) => <li key={i}>
+                              {source.url ? (<a href={source.url} target="_blank" rel="noopener noreferrer">{source.label}</a>) : (<span>{source.label}</span>)}
+                            </li>)}
+                          </ul>
+                        </div>
+                      </div>
+                    )}
+                  </li>
+                ))}
+              </ul>
             </li>
           ))}
         </ul>
