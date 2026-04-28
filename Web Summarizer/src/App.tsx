@@ -173,37 +173,22 @@ function App() {
             <li key={item.id}>
               <span>{item.url}</span>
               <span>{new Date(item.timestamp).toLocaleString()}</span>
-              <ul>
-                {filteredHistory.map(item => (
-                  <li key={item.id}>
-                    <button onClick={(e) => {
-                      e.stopPropagation();
-                      deleteHistoryItem(item.id);
-                      }}>Delete</button>
-                    <button onClick={() => toggleExpand(item.id)}>
-                      {expandedId === item.id ? "Hide Details" : "Show Details"}
-                    </button>
-                    {expandedId === item.id && (
-                      <div className="ResultsBlock">
-                        <div className="Result">
-                          <h2>Summary</h2>
-                          <ul>
-                            {item.result.summary.map((point, i) => <li key={i}>{point}</li>)}
-                          </ul>
-                        </div>
-                        <div className="Source">
-                          <h2>Sources</h2>
-                          <ul>
-                            {item.result.sources.map((source, i) => <li key={i}>
-                              {source.url ? (<a href={source.url} target="_blank" rel="noopener noreferrer">{source.label}</a>) : (<span>{source.label}</span>)}
-                            </li>)}
-                          </ul>
-                        </div>
-                      </div>
-                    )}
-                  </li>
-                ))}
-              </ul>
+              <button onClick={() => deleteHistoryItem(item.id)}>Delete</button>
+              <button onClick={() => toggleExpand(item.id)}>{expandedId === item.id ? "Hide Details" : "Show Details"}</button>
+              {expandedId === item.id && (
+                <div className="HistoryDetails">
+                  <h2>Summary</h2>
+                  <ul>
+                    {item.result.summary.map((point, i) => <li key={i}>{point}</li>)}
+                  </ul>
+                  <h2>Sources</h2>
+                  <ul>
+                    {item.result.sources.map((source, i) => <li key={i}>
+                        {source.url ? (<a href={source.url} target="_blank" rel="noopener noreferrer">{source.label}</a>) : (<span>{source.label}</span>)}
+                    </li>)}
+                  </ul>
+                </div>
+              )}
             </li>
           ))}
         </ul>
