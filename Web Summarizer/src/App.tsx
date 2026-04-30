@@ -127,12 +127,12 @@ function App() {
       <button onClick={summarize} disabled={loading}>
       {loading ? "Summarizing..." : "Summarize"}
       </button>
-      {result && (
-        <div>
-          <button onClick={() => { setResult(null); setUrl(''); }}>Clear Summary</button>
-       </div>
-      )}
     </div>
+    {result && (
+       <div>
+         <button onClick={() => { setResult(null); setUrl(''); }}>Clear Summary</button>
+      </div>
+    )}
 
     {error && (
       <div className="Error">
