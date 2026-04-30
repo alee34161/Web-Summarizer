@@ -113,7 +113,7 @@ function App() {
   const filteredHistory = history.filter(item => {
     const searchLower = search.toLowerCase();
     if(!searchLower) return true;
-    return item.url.toLowerCase().includes(searchLower) || item.result.summary.some(point => point.toLowerCase().includes(searchLower));
+    return item.url.toLowerCase().includes(searchLower) || item.result.summary.some(point => point.toLowerCase().includes(searchLower)) || item.result.sources.some(source => source.label.toLowerCase().includes(searchLower));
   });
 
   return (
