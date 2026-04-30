@@ -128,7 +128,9 @@ function App() {
       {loading ? "Summarizing..." : "Summarize"}
       </button>
       {result && (
-        <button onClick={() => setResult(null)}>Clear Summary</button>
+        <div>
+          <button onClick={() => { setResult(null); setUrl(''); }}>Clear Summary</button>
+       </div>
       )}
     </div>
 
