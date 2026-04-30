@@ -177,8 +177,8 @@ function App() {
           {filteredHistory.map((item) => (
             <li key={item.id}>
               <div className="HistoryHeader">
-                <span>{item.url}</span>
-                <span>, {new Date(item.timestamp).toLocaleString()}</span>
+                <span className="HistoryURL">{item.url}</span>
+                <span className="HistoryDate">{new Date(item.timestamp).toLocaleString()}</span>
               </div>
               <div className="HistoryButton">
                 <button onClick={() => deleteHistoryItem(item.id)}>Delete</button>
@@ -209,7 +209,7 @@ function App() {
     </div>
 
     <div className="Footer">
-      <p>This web app uses generative AI to summarize links and is meant to quickly parse data.</p>
+      <p>This web app uses AI to summarize links and is meant to quickly parse data.</p>
       <p>Please verify accuracy of important information and sources before use.</p>
     </div>
     </>
