@@ -127,6 +127,9 @@ function App() {
       <button onClick={summarize} disabled={loading}>
       {loading ? "Summarizing..." : "Summarize"}
       </button>
+      {result && (
+        <button onClick={() => setResult(null)}>Clear Summary</button>
+      )}
     </div>
 
     {error && (
@@ -173,7 +176,7 @@ function App() {
             <li key={item.id}>
               <div className="HistoryHeader">
                 <span>{item.url}</span>
-                <span>{new Date(item.timestamp).toLocaleString()}</span>
+                <span>, {new Date(item.timestamp).toLocaleString()}</span>
               </div>
               <div className="HistoryButton">
                 <button onClick={() => deleteHistoryItem(item.id)}>Delete</button>
